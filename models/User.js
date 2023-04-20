@@ -20,19 +20,15 @@ const UserSchema = new mongoose.Schema({
   role: {
     type: String,
     default: 'guest',
+    validate: {
+      validator: (value) => value === 'guest',
+      message: 'Role must be guest.'
+    }
   },
   password: {
     type: String,
     required: [true, 'Please add a password'],
     select: false
-  },
-  permissions: {
-    type: [String],
-    immutable: [true, 'You are not allowed to edit this field'],
-  },
-  lostCard: {
-    type: Boolean,
-    required: true,
   },
   createdAt: {
     type: Date,
@@ -42,10 +38,6 @@ const UserSchema = new mongoose.Schema({
 
 // Encrypt password using bcrypt
 UserSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) {
-    next();
-  }
-
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
