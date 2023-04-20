@@ -1,16 +1,19 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const colors = require('colors');
+const dotenv = require('dotenv');
 
-const app = express();
+// Load env vars
+dotenv.config({ path: './config/config.env' });
 
 // Connect to DB
 connectDB();
 
-// Init Middleware - extended: false limits it to prasing objects and arrays only
-app.use(express.json({ extended: false }));
+// Initialize server
+const app = express();
 
-app.get('/', (req, res) => res.send('API Running'));
+// Body parser
+app.use(express.json());
 
 // Define Routes
 app.use('/api/users', require('./routes/api/users'));
