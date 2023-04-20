@@ -64,7 +64,7 @@ exports.logout = asyncHandler(async (req, res, next) => {
 });
 
 // @desc      Get current logged in user
-// @route     POST /api/v1/auth/me
+// @route     POST /api/auth/me
 // @access    Private
 exports.getMe = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
@@ -76,7 +76,7 @@ exports.getMe = asyncHandler(async (req, res, next) => {
 });
 
 // @desc      Update user details
-// @route     PUT /api/v1/auth/updatedetails
+// @route     PUT /api/auth/updatedetails
 // @access    Private
 exports.updateDetails = asyncHandler(async (req, res, next) => {
   const fieldsToUpdate = {
@@ -96,7 +96,7 @@ exports.updateDetails = asyncHandler(async (req, res, next) => {
 });
 
 // @desc      Update password
-// @route     PUT /api/v1/auth/updatepassword
+// @route     PUT /api/auth/updatepassword
 // @access    Private
 exports.updatePassword = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id).select('+password');

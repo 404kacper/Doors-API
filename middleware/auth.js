@@ -13,7 +13,6 @@ exports.protect = asyncHandler(async (req, res, next) => {
   ) {
     // Set token from Bearer token in header
     token = req.headers.authorization.split(' ')[1];
-    // Set token from cookie
   }
   // else if (req.cookies.token) {
   //   token = req.cookies.token;
@@ -28,6 +27,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
+    // Overwrite the request user object with what's inside db
     req.user = await User.findById(decoded.id);
 
     next();
