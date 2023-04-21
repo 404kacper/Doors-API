@@ -30,7 +30,9 @@ if (process.env.NODE_ENV == 'development') {
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/doors', require('./routes/api/doors'));
 app.use('/api/auth', require('./routes/api/auth'));
+app.use('/api/cards', require('./routes/api/cards'));
 
+// Custom error handler
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;

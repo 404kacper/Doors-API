@@ -1,26 +1,28 @@
 const express = require('express');
-const {
-  testGuest,
-  testEmployee,
-  testAdmin,
-} = require('../../controllers/doors');
+const { createDoor, getDoors, getManagedDoors } = require('../../controllers/doors');
 const router = express.Router();
 
+const Door = require('../../models/Door');
 const { protect, authorize } = require('../../middleware/auth');
+const advancedResults = require('../../middleware/advancedResults');
 
+router
+  .route('/')
+  .post(protect, authorize('admin'), createDoor)
+  .get(
+    protect,
+    authorize('admin'),
+    advancedResults(Door, { path: 'manager', select: 'name role' }),
+    getDoors
+  );
 
-router.get(
-  '/test/guest',
-  protect,
-  authorize('guest', 'employee', 'admin'),
-  testGuest
-);
-router.get(
-  '/test/employee',
-  protect,
-  authorize('employee', 'admin'),
-  testEmployee
-);
-router.get('/test/admin', protect, authorize('admin'), testAdmin);
+router
+  .route('/me')
+  .get(
+    protect,
+    authorize('employee', 'admin'),
+    advancedResults(Door, { path: 'manager', select: 'name role' }),
+    getManagedDoors
+  );
 
 module.exports = router;

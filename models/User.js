@@ -19,11 +19,11 @@ const UserSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    default: 'guest',
-    validate: {
-      validator: (value) => value === 'guest',
-      message: 'Role must be guest.'
-    }
+    enum: {
+      values: ['guest'],
+      message: 'Role must be guest'
+    },
+    default: 'guest'
   },
   password: {
     type: String,
