@@ -33,30 +33,40 @@ exports.getCards = asyncHandler(async (req, res, next) => {
 exports.manageStatus = asyncHandler(async (req, res, next) => {
   const { status } = req.body;
 
-  const updatedCard = await Card.findByIdAndUpdate(req.params.id, {
-    status,
-  });
+  if (status !== 'lost' && status !== 'not lost') {
+    return next(new ErrorResponse('Status can only be lost or not lost', 400));
+  }
+
+  const updatedCard = await Card.findByIdAndUpdate(
+    req.params.id,
+    {
+      status: status,
+    },
+    { new: true }
+  );
 
   res.status(200).json({
     success: true,
-    data: updatedCard
+    data: updatedCard,
   });
 });
 
-// @desc      Assign door to a card
+// @desc      Assign card to a door
 // @route     PUT /api/cards
 // @access    Private/Admin
 exports.assignCard = asyncHandler(async (req, res, next) => {
-  const { card_id, door_number } = req.body;
+  const { card, number } = req.body;
 
-  const matchedDoor = await Door.findOne({ number: door_number });
+  const matchedDoor = await Door.findOne({ number });
 
   if (matchedDoor) {
-    const updatedCard = await Card.findByIdAndUpdate(card_id, {
-      door: matchedDoor.id,
-      new: true,
-      runValidators: true,
-    });
+    const updatedCard = await Card.findByIdAndUpdate(
+      card,
+      {
+        door: matchedDoor.id,
+      },
+      { new: true, runValidators: true }
+    );
 
     // Check if the updatedCard.id already exists in the cards array
     if (matchedDoor.cards.includes(updatedCard.id)) {
@@ -77,8 +87,6 @@ exports.assignCard = asyncHandler(async (req, res, next) => {
       data: updatedCard,
     });
   } else {
-    next(
-      new ErrorResponse(`No matching door found for door: ${door_number}`, 404)
-    );
+    next(new ErrorResponse(`No matching door found`, 404));
   }
 });
