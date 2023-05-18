@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import Navbar from '../layout/Navbar';
+import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
@@ -7,7 +8,7 @@ import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
 import Alert from '../layout/Alert';
 
-const Register = ({ setAlert, register }) => {
+const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -15,7 +16,6 @@ const Register = ({ setAlert, register }) => {
     password2: '',
     role: 'guest', // for checked property in radio buttons - default role
   });
-
   const roleOptions = [
     { value: 'guest', label: 'Guest' },
     { value: 'employee', label: 'Employee' },
@@ -35,6 +35,12 @@ const Register = ({ setAlert, register }) => {
       register({name, email, password, role});
     }
   };
+
+  const navigate = useNavigate(); // navigate hook for redirection
+
+  if (isAuthenticated) {
+    navigate('/dashboard');
+  }
 
   return (
     <Fragment>
@@ -140,7 +146,12 @@ const Register = ({ setAlert, register }) => {
 
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
-  register: PropTypes.func.isRequired
+  register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
 };
 
-export default connect(null, { setAlert, register })(Register);
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { setAlert, register })(Register);
