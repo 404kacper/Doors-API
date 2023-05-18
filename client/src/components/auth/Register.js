@@ -1,8 +1,12 @@
 import React, { Fragment, useState } from 'react';
 import Navbar from '../layout/Navbar';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { setAlert } from '../../actions/alert';
+import PropTypes from 'prop-types';
+import Alert from '../layout/Alert';
 
-const Register = () => {
+const Register = ({ setAlert }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -25,7 +29,7 @@ const Register = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
-      console.log('Passwords do not match');
+      setAlert('Passwords do not match', 'danger');
     } else {
       const newUser = {
         name,
@@ -63,9 +67,7 @@ const Register = () => {
                   <h1>
                     <i className='fas fa-user-plus'></i> Register
                   </h1>
-                  <p>
-                    Register to gain different access levels to doors API.
-                  </p>
+                  <p>Register to gain different access levels to doors API.</p>
                   <form onSubmit={(e) => onSubmit(e)}>
                     <div className='form-group'>
                       <label htmlFor='name'>Name</label>
@@ -135,11 +137,7 @@ const Register = () => {
                         </div>
                       ))}
                     </div>
-
-                    <p className='text-danger'>
-                      * You must be affiliated with the bootcamp in some way in
-                      order to add it to DevCamper.
-                    </p>
+                    <Alert />
 
                     <div className='form-group'>
                       <input
@@ -159,4 +157,8 @@ const Register = () => {
   );
 };
 
-export default Register;
+Register.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+};
+
+export default connect(null, { setAlert })(Register);
