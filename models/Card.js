@@ -1,7 +1,4 @@
 const mongoose = require('mongoose');
-const asyncHandler = require('../middleware/async');
-const ErrorResponse = require('../utils/errorResponse');
-const Door = require('./Door');
 
 const CardSchema = new mongoose.Schema({
   user: {

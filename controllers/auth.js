@@ -67,7 +67,7 @@ exports.logout = asyncHandler(async (req, res, next) => {
 // @route     POST /api/auth/me
 // @access    Private
 exports.getMe = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.user.id);
+  const user = await User.findById(req.user.id).select('-password -_id -createdAt -__v');
 
   res.status(200).json({
     success: true,
