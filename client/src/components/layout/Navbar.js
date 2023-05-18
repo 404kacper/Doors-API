@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Landing = (props) => {
   return (
-    <nav className={`navbar navbar-expand-md navbar-dark ${props.bgClass} fixed-top`}>
+    <nav className={`navbar navbar-expand-md navbar-dark ${props.bgClass} ${props.positionClass}`}>
       <div className='container'>
         <Link className='navbar-brand' to='/'>
           <i className='fas fa-door-open'></i> DoorManager

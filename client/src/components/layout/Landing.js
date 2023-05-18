@@ -4,7 +4,7 @@ import Navbar from '../layout/Navbar';
 const Landing = () => {
   return (
     <Fragment>
-      <Navbar />
+      <Navbar positionClass='fixed-top'/>
       <section className='showcase'>
         <div className='dark-overlay'>
           <div className='showcase-inner container'>

@@ -3,13 +3,13 @@ img {
 }
 .showcase {
   position: relative;
-  background: url('./img/showcase.jpg') no-repeat 0% 50%/cover;
+  background: url('./img/showcase.jpg') no-repeat 0% 60%/cover;
   min-height: 100vh;
   color: #fff;
 }
 .showcase-inner {
   text-align: center;
-  padding-top: 23%;
+  padding-top: 20%;
   height: 100%;
   width: 80%;
   margin: auto;

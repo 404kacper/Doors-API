@@ -20,8 +20,8 @@ const UserSchema = new mongoose.Schema({
   role: {
     type: String,
     enum: {
-      values: ['guest'],
-      message: 'Role must be guest'
+      values: ['guest', 'employee', 'admin'],
+      message: `Please enter valid role `
     },
     default: 'guest'
   },
