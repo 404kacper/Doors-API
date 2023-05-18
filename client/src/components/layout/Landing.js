@@ -1,46 +1,21 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import Navbar from '../layout/Navbar';
 
 const Landing = () => {
   return (
-    <section className='showcase'>
-      <div className='dark-overlay'>
-        <div className='showcase-inner container'>
-          <h1 className='display-4'>Find a Code Bootcamp</h1>
-          <p className='lead'>
-            Find, rate and read reviews on coding bootcamps
-          </p>
-          <form action='bootcamps.html'>
-            <div className='row'>
-              <div className='col-md-6'>
-                <div className='form-group'>
-                  <input
-                    type='text'
-                    className='form-control'
-                    name='miles'
-                    placeholder='Miles From'
-                  />
-                </div>
-              </div>
-              <div className='col-md-6'>
-                <div className='form-group'>
-                  <input
-                    type='text'
-                    className='form-control'
-                    name='zipcode'
-                    placeholder='Enter Zipcode'
-                  />
-                </div>
-              </div>
-            </div>
-            <input
-              type='submit'
-              value='Find Bootcamps'
-              className='btn btn-primary btn-block'
-            />
-          </form>
+    <Fragment>
+      <Navbar />
+      <section className='showcase'>
+        <div className='dark-overlay'>
+          <div className='showcase-inner container'>
+            <h1 className='display-4'>Find a Door That Belongs To You</h1>
+            <p className='lead'>
+              Simple & Intuitional API for doors management with admin panel.
+            </p>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </Fragment>
   );
 };
- export default Landing;
+export default Landing;

@@ -1,12 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const Landing = () => {
+const Landing = (props) => {
   return (
-    <nav className='navbar navbar-expand-md navbar-dark bg-primary fixed-top'>
+    <nav className={`navbar navbar-expand-md navbar-dark ${props.bgClass} fixed-top`}>
       <div className='container'>
-        <a className='navbar-brand' href='index.html'>
-          <i className='fas fa-laptop-code'></i> DoorManager
-        </a>
+        <Link className='navbar-brand' to='/'>
+          <i className='fas fa-door-open'></i> DoorManager
+        </Link>
         <button
           className='navbar-toggler'
           type='button'
@@ -19,14 +20,14 @@ const Landing = () => {
         <div className='collapse navbar-collapse' id='navbarSupportedContent'>
           <ul className='navbar-nav ml-auto'>
             <li className='nav-item'>
-              <a className='nav-link' href='login.html'>
+              <Link className='nav-link' to='/login'>
                 <i className='fas fa-sign-in-alt'></i> Login
-              </a>
+              </Link>
             </li>
             <li className='nav-item'>
-              <a className='nav-link' href='register.html'>
+              <Link className='nav-link' to='/register'>
                 <i className='fas fa-user-plus'></i> Register
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
