@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Landing from './components/layout/Landing';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
-import Dashboard from './components/pages/Dashboard';
+import Dashboard from './components/dashboard/Dashboard';
 import { LOGOUT } from './actions/types';
 
 // Redux

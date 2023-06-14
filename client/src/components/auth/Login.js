@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import Navbar from '../layout/Navbar';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { login } from '../../actions/auth';
@@ -21,10 +21,8 @@ const Login = ({ login, isAuthenticated }) => {
     login(email, password);
   };
 
-  const navigate = useNavigate(); // navigate hook for redirection
-
   if (isAuthenticated) {
-    navigate('/dashboard');
+    return <Navigate to='/dashboard'></Navigate>;
   }
 
   return (
