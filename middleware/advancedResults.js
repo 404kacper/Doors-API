@@ -8,16 +8,30 @@ const advancedResults = (model, populate) => async (req, res, next) => {
   const removeFields = ['select', 'sort', 'page', 'limit'];
 
   // Loop over removeFields and delete them from reqQuery
-  removeFields.forEach(param => delete reqQuery[param]);
+  removeFields.forEach((param) => delete reqQuery[param]);
 
   // Create query string
   let queryStr = JSON.stringify(reqQuery);
 
   // Create operators ($gt, $gte, etc)
-  queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
+  queryStr = queryStr.replace(
+    /\b(gt|gte|lt|lte|in)\b/g,
+    (match) => `$${match}`
+  );
 
   // Finding resource
   query = model.find(JSON.parse(queryStr));
+
+  // Exclude Fields
+  if (populate && populate.exclude) {
+    // Automatically add - sign if it's not included in exclude:
+    const fields = populate.exclude
+      .split(' ')
+      .map((field) => (field.startsWith('-') ? field : '-' + field))
+      .join(' ');
+    // Add changes to our query - remove fields
+    query = query.select(fields);
+  }
 
   // Select Fields
   if (req.query.select) {
@@ -55,14 +69,14 @@ const advancedResults = (model, populate) => async (req, res, next) => {
   if (endIndex < total) {
     pagination.next = {
       page: page + 1,
-      limit
+      limit,
     };
   }
 
   if (startIndex > 0) {
     pagination.prev = {
       page: page - 1,
-      limit
+      limit,
     };
   }
 
@@ -70,7 +84,7 @@ const advancedResults = (model, populate) => async (req, res, next) => {
     success: true,
     count: results.length,
     pagination,
-    data: results
+    data: results,
   };
 
   next();

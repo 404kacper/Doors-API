@@ -1,9 +1,9 @@
 import React, { Fragment, useState } from 'react';
 import Navbar from '../layout/Navbar';
-import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
+import { Navigate } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
 import Alert from '../layout/Alert';
@@ -36,10 +36,8 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     }
   };
 
-  const navigate = useNavigate(); // navigate hook for redirection
-
   if (isAuthenticated) {
-    navigate('/dashboard');
+    return <Navigate to='/dashboard'></Navigate>;
   }
 
   return (

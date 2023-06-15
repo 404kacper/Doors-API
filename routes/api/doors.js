@@ -1,5 +1,9 @@
 const express = require('express');
-const { createDoor, getDoors, getManagedDoors } = require('../../controllers/doors');
+const {
+  createDoor,
+  getDoors,
+  getManagedDoors,
+} = require('../../controllers/doors');
 const router = express.Router();
 
 const Door = require('../../models/Door');
@@ -11,8 +15,7 @@ router
   .post(protect, authorize('admin'), createDoor)
   .get(
     protect,
-    authorize('admin'),
-    advancedResults(Door, { path: 'manager', select: 'name role' }),
+    advancedResults(Door, { path: 'manager', select: '-_id name role', exclude: '__v createdAt _id cards'}),
     getDoors
   );
 

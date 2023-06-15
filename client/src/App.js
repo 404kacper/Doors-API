@@ -13,8 +13,10 @@ import store from './store';
 import { loadUser } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
 
+// Css and bootstrap js
 import './style.css';
-import './bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import PrivateRoute from './components/routing/PrivateRoute';
 
 const App = () => {

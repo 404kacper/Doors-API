@@ -3,19 +3,17 @@ import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 
 import Navbar from '../layout/Navbar';
+import GuestDashboard from './GuestDashboard';
 
-// po skończeniu tego dodać logout do navbara - renderowanie w zalezności od isAuthenticated
-// dobra co dalej - navbar w zaleznosci od authenticated / not - to samo co u góry tylko wywalić login/register
-// ew zastanowić się co zrobić z redirectem na DoorManager - isAuthenticated ? dashboard : landing
 const Dasbhoard = ({ auth: { user } }) => {
   const renderRole = () => {
     if (!user || !user.data) {
-      return <div>User is waiting please wait a few seconds...</div>
+      return <div>User is loading please wait a few seconds...</div>
     }
     
     switch(user.data.role) {
       case 'guest':
-        return <div>Guest logged in.</div>
+        return <GuestDashboard/>
       case 'employee':
         return <div>Employee logged in.</div>
       case 'admin':
