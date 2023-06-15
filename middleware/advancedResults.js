@@ -22,14 +22,44 @@ const advancedResults = (model, populate) => async (req, res, next) => {
   // Finding resource
   query = model.find(JSON.parse(queryStr));
 
+  // Helper function to handle population with exclusions recursively - use case at the end of this file
+  function handlePopulation(populate) {
+    let populationObject = {};
+
+    // If path is an array with more than one element, we have nested populations
+    if (Array.isArray(populate.path) && populate.path.length > 1) {
+      populationObject.path = populate.path[0];
+      populationObject.select = populate.select;
+      populationObject.populate = handlePopulation({
+        path: populate.path.slice(1),
+        select: populate.populate && populate.populate.select,
+        exclude: populate.populate && populate.populate.exclude,
+      });
+    } else {
+      // If path is a string or an array of one element, we're at the deepest level of nesting
+      populationObject.path = Array.isArray(populate.path)
+        ? populate.path[0]
+        : populate.path;
+
+      if (populate.exclude) {
+        populationObject.select = populate.exclude
+          .split(' ')
+          .map((field) => (field.startsWith('-') ? field : '-' + field))
+          .join(' ');
+      } else {
+        populationObject.select = populate.select;
+      }
+    }
+
+    return populationObject;
+  }
+
   // Exclude Fields
   if (populate && populate.exclude) {
-    // Automatically add - sign if it's not included in exclude:
     const fields = populate.exclude
       .split(' ')
       .map((field) => (field.startsWith('-') ? field : '-' + field))
       .join(' ');
-    // Add changes to our query - remove fields
     query = query.select(fields);
   }
 
@@ -57,7 +87,7 @@ const advancedResults = (model, populate) => async (req, res, next) => {
   query = query.skip(startIndex).limit(limit);
 
   if (populate) {
-    query = query.populate(populate);
+    query = query.populate(handlePopulation(populate));
   }
 
   // Executing query
@@ -91,3 +121,27 @@ const advancedResults = (model, populate) => async (req, res, next) => {
 };
 
 module.exports = advancedResults;
+
+// Example call to populate with advancedResults and recursion
+
+// router
+//   .route('/me')
+//   .get(
+//     protect,
+//     authorize('guest', 'employee', 'admin'),
+//     advancedResults(Card, {
+//       path: ['door', 'manager'],
+//       select: '-_id -cards -createdAt -__v',
+//       populate: {
+//         path: 'manager',
+//         select: 'name email -_id',
+//         exclude: 'password',
+//         populate: {
+//           path: 'team',
+//           select: 'name members -_id',
+//           exclude: 'created_at'
+//         }
+//       }
+//     }),
+//     getUserCards
+//   );

@@ -15,7 +15,11 @@ router
   .post(protect, authorize('admin'), createDoor)
   .get(
     protect,
-    advancedResults(Door, { path: 'manager', select: '-_id name role', exclude: '__v createdAt _id cards'}),
+    advancedResults(Door, {
+      path: 'manager',
+      select: '-_id name role',
+      exclude: '__v createdAt _id cards',
+    }),
     getDoors
   );
 

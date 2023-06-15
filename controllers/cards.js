@@ -1,6 +1,7 @@
 const asyncHandler = require('../middleware/async');
 const Card = require('../models/Card');
 const Door = require('../models/Door');
+const User = require('../models/User');
 const ErrorResponse = require('../utils/errorResponse');
 
 // @desc      Create card
@@ -25,6 +26,25 @@ exports.createCard = asyncHandler(async (req, res, next) => {
 // @access    Private/Admin
 exports.getCards = asyncHandler(async (req, res, next) => {
   res.status(200).json(res.advancedResults);
+});
+
+// @desc      Gets cards assigned to logged in user
+// @route     GET /api/cards/me
+// @access    Private
+exports.getUserCards = asyncHandler(async (req, res, next) => {
+  // Create a new copy of the advancedResults data object
+  let userCards = { ...res.advancedResults };
+
+  // Filter out the cards that belong to the current user and remove the 'user' field
+  userCards.data = userCards.data.reduce((acc, card) => {
+    if (card.user.toString() === req.user.id.toString()) {
+      let { user, ...cardWithoutUser } = card.toObject(); // convert the document to a plain JS object first
+      acc.push(cardWithoutUser);
+    }
+    return acc;
+  }, []);
+
+  res.status(200).json(userCards);
 });
 
 // @desc      Assigns status to card

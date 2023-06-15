@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { DOORS_LOADED } from './types';
+import { DOORS_LOADED, CARDS_LOADED } from './types';
 
 // Load Doors
 export const loadDoors = () => async (dispatch) => {
@@ -8,6 +8,22 @@ export const loadDoors = () => async (dispatch) => {
 
     dispatch({
       type: DOORS_LOADED,
+      payload: res.data,
+    });
+
+  } catch (error) {
+    console.error(error);
+  }
+
+};
+
+// Load Cards
+export const loadCards = () => async (dispatch) => {
+  try {
+    const res = await axios.get('/api/cards/me');
+
+    dispatch({
+      type: CARDS_LOADED,
       payload: res.data,
     });
 

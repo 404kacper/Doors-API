@@ -27,16 +27,6 @@ const Navbar = ({
 
   const guestLinks = (
     <Fragment>
-      <li className='nav-item'>
-        <Link className='nav-link' to='/login'>
-          <i className='fas fa-sign-in-alt'></i> Login
-        </Link>
-      </li>
-      <li className='nav-item'>
-        <Link className='nav-link' to='/register'>
-          <i className='fas fa-user-plus'></i> Register
-        </Link>
-      </li>
       <li>
         <button
           onClick={logout}

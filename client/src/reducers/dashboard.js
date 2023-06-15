@@ -1,7 +1,8 @@
-import { DOORS_LOADED } from '../actions/types';
+import { DOORS_LOADED, CARDS_LOADED } from '../actions/types';
 
 const initialState = {
   doors: [],
+  cards: [],
 };
 
 export default function dashboard(state = initialState, action) {
@@ -12,6 +13,11 @@ export default function dashboard(state = initialState, action) {
       return {
         ...state,
         doors: payload.data,
+      };
+    case CARDS_LOADED:
+      return {
+        ...state,
+        cards: payload.data,
       };
     default:
       return state;
