@@ -1,13 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { PropTypes } from 'prop-types';
 
-const GuestDashboard = () => {
+import { loadDoors } from '../../actions/dashboard';
+
+const GuestDashboard = ({ loadDoors, doors }) => {
+  useEffect(() => {
+    loadDoors();
+  }, [loadDoors]);
   return <div className='container'>Guest dashboard</div>;
 };
 
-GuestDashboard.propTypes = {};
+GuestDashboard.propTypes = {
+  loadDoors: PropTypes.func.isRequired,
+  doors: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  doors: state.dashboard.doors,
+});
 
-// export default connect(mapStateToProps, { login })(Login);
-export default connect(mapStateToProps)(GuestDashboard);
+export default connect(mapStateToProps, { loadDoors })(GuestDashboard);

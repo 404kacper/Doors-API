@@ -5,6 +5,7 @@ import { PropTypes } from 'prop-types';
 import Navbar from '../layout/Navbar';
 import GuestDashboard from './GuestDashboard';
 
+
 const Dasbhoard = ({ auth: { user } }) => {
   const renderRole = () => {
     if (!user || !user.data) {
