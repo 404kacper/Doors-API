@@ -2,7 +2,7 @@ import axios from 'axios';
 import { DOORS_LOADED, CARDS_LOADED } from './types';
 
 // Load Doors
-export const loadDoors = () => async (dispatch) => {
+export const loadAllDoors = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/doors');
 
@@ -18,7 +18,7 @@ export const loadDoors = () => async (dispatch) => {
 };
 
 // Load Cards
-export const loadCards = () => async (dispatch) => {
+export const loadGuestCards = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/cards/me');
 

@@ -5,7 +5,7 @@ import { Card, Container, Row, Col } from 'react-bootstrap';
 
 import { loadAllDoors, loadGuestCards } from '../../actions/dashboard';
 
-const GuestDashboard = ({ loadAllDoors, loadGuestCards, doors, cards }) => {
+const EmployeeDashboard = ({ loadAllDoors, loadGuestCards, doors, cards }) => {
   useEffect(() => {
     loadGuestCards();
     loadAllDoors();
@@ -157,7 +157,7 @@ const GuestDashboard = ({ loadAllDoors, loadGuestCards, doors, cards }) => {
   );
 };
 
-GuestDashboard.propTypes = {
+EmployeeDashboard.propTypes = {
   loadAllDoors: PropTypes.func.isRequired,
   loadGuestCards: PropTypes.func.isRequired,
   doors: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -170,5 +170,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, { loadAllDoors, loadGuestCards })(
-  GuestDashboard
+  EmployeeDashboard
 );

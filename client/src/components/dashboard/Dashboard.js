@@ -4,6 +4,7 @@ import { PropTypes } from 'prop-types';
 
 import Navbar from '../layout/Navbar';
 import GuestDashboard from './GuestDashboard';
+import EmployeeDashboard from './EmployeeDashboard';
 
 
 const Dasbhoard = ({ auth: { user } }) => {
@@ -16,7 +17,7 @@ const Dasbhoard = ({ auth: { user } }) => {
       case 'guest':
         return <GuestDashboard/>
       case 'employee':
-        return <div>Employee logged in.</div>
+        return <EmployeeDashboard/>
       case 'admin':
         return <div>Admin logged in.</div>
         default:

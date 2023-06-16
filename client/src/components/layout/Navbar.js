@@ -5,11 +5,16 @@ import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
 
 const Navbar = ({
-  auth: { isAuthenticated, role },
+  auth: { isAuthenticated, user },
   logout,
   bgClass = '',
   positionClass = '',
 }) => {
+  let role = ''; // default value for role - it can't be destructure directly from props as it can be null
+  if (user) {
+    role = user.data.role;
+  }
+
   const unauthenticatedLinks = (
     <ul className='navbar-nav ml-auto'>
       <li className='nav-item'>
@@ -42,50 +47,43 @@ const Navbar = ({
 
   const employeeLinks = (
     <Fragment>
-      <li className='nav-item'>
-        <Link className='nav-link' to='/login'>
-          <i className='fas fa-sign-in-alt'></i> Login
-        </Link>
-      </li>
-      <li className='nav-item'>
-        <Link className='nav-link' to='/register'>
-          <i className='fas fa-user-plus'></i> Register
-        </Link>
-      </li>
       <li>
-        <a onClick={logout} href='#!'>
+        <button
+          onClick={logout}
+          className='nav-link'
+          style={{ background: 'none', border: 'none' }}
+        >
           <i className='fas fa-sign-out-alt' />{' '}
           <span className='hide-sm'>Logout</span>
-        </a>
+        </button>
       </li>
     </Fragment>
   );
 
   const adminLinks = (
     <Fragment>
-      <li class='nav-item dropdown'>
+      <li className='nav-item dropdown'>
         <button
-          class='nav-link dropdown-toggle'
-          href='#'
+          className='nav-link dropdown-toggle'
           id='navbarDropdown'
-          data-toggle='dropdown'
+          data-bs-toggle='dropdown'
         >
-          <i class='fas fa-user'></i> Account
+          <i className='fas fa-user'></i> Account
         </button>
-        <div class='dropdown-menu'>
-          <a class='dropdown-item' href='manage-bootcamp.html'>
+        <div className='dropdown-menu'>
+          <Link className='dropdown-item' to='/manage-bootcamp'>
             Manage Bootcamp
-          </a>
-          <a class='dropdown-item' href='manage-reviews.html'>
+          </Link>
+          <Link className='dropdown-item' to='/manage-reviews'>
             Manage Reviews
-          </a>
-          <a class='dropdown-item' href='manage-account.html'>
+          </Link>
+          <Link className='dropdown-item' to='/manage-account'>
             Manage Account
-          </a>
-          <div class='dropdown-divider'></div>
-          <a class='dropdown-item' href='login.html'>
-            <i class='fas fa-sign-out-alt'></i> Logout
-          </a>
+          </Link>
+          <div className='dropdown-divider'></div>
+          <button onClick={logout} className='dropdown-item'>
+            <i className='fas fa-sign-out-alt'></i> Logout
+          </button>
         </div>
       </li>
     </Fragment>
@@ -137,7 +135,10 @@ const Navbar = ({
 
 Navbar.propTypes = {
   logout: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
+  auth: PropTypes.shape({
+    isAuthenticated: PropTypes.bool,
+    user: PropTypes.object,
+  }).isRequired,
   bgClass: PropTypes.string,
   positionClass: PropTypes.string,
 };
