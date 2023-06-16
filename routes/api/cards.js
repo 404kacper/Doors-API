@@ -19,7 +19,10 @@ router
   .get(
     protect,
     authorize('admin'),
-    advancedResults(Card, { path: 'door', select: 'number manager' }),
+    advancedResults(Card, {
+      path: 'door user',
+      select: 'number manager name -_id',
+    }),
     getCards
   )
   .put(protect, authorize('admin'), assignCard);

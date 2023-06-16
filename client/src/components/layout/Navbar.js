@@ -47,15 +47,23 @@ const Navbar = ({
 
   const employeeLinks = (
     <Fragment>
-      <li>
+      <li className='nav-item dropdown'>
         <button
-          onClick={logout}
-          className='nav-link'
-          style={{ background: 'none', border: 'none' }}
+          className='nav-link dropdown-toggle'
+          id='navbarDropdown'
+          data-bs-toggle='dropdown'
         >
-          <i className='fas fa-sign-out-alt' />{' '}
-          <span className='hide-sm'>Logout</span>
+          <i className='fas fa-user'></i> Account
         </button>
+        <div className='dropdown-menu'>
+          <Link className='dropdown-item' to='/create-card'>
+            Create Card - comming soon
+          </Link>
+          <div className='dropdown-divider'></div>
+          <button onClick={logout} className='dropdown-item'>
+            <i className='fas fa-sign-out-alt'></i> Logout
+          </button>
+        </div>
       </li>
     </Fragment>
   );

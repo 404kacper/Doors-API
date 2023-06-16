@@ -1,153 +1,134 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { Card, Container, Row, Col } from 'react-bootstrap';
+import {
+  Card,
+  Container,
+  Row,
+  Col,
+  Button,
+  Accordion,
+  Badge,
+} from 'react-bootstrap';
 
-import { loadAllDoors, loadGuestCards } from '../../actions/dashboard';
+import { loadAllManagedDoors, changeCardStatus } from '../../actions/dashboard';
 
-const EmployeeDashboard = ({ loadAllDoors, loadGuestCards, doors, cards }) => {
+const EmployeeDashboard = ({
+  loadAllManagedDoors,
+  changeCardStatus,
+  doors,
+}) => {
   useEffect(() => {
-    loadGuestCards();
-    loadAllDoors();
-  }, [loadAllDoors, loadGuestCards]);
+    loadAllManagedDoors();
+  }, [loadAllManagedDoors]);
+
+  const handleStatusChange = (card) => {
+    changeCardStatus(card);
+  };
+
   return (
     <Container className='mt-5'>
       <Row>
-        <Col md={{ span: 12, offset: 0 }}>
-          <Card bg='white' className='py-2 px-4'>
-            <Card.Body>
-              <h1 className='mb-1'>Doors</h1>
-              <h3 className='text-primary mb-5'>List of All Doors</h3>
-              <Container
-                className='doors-container px-0'
-                style={{ overflowY: 'scroll', maxHeight: '400px' }}
-              >
-                <Row xs={1} md={2} lg={4} className='mx-0'>
-                  {doors.map((door, index) => (
-                    <Col
-                      key={index}
-                      className='mb-4'
-                      style={{ paddingLeft: 0 }}
-                    >
-                      <Card
-                        bg={
-                          cards.some((card) => card.door.number === door.number)
-                            ? 'primary'
-                            : 'white'
-                        }
-                      >
-                        <Card.Header>
-                          Manager:{' '}
-                          <span
-                            className={
-                              cards.some(
-                                (card) => card.door.number === door.number
-                              )
-                                ? 'text-white'
-                                : 'text-primary'
-                            }
-                          >
-                            {door.manager.name}
-                          </span>
-                        </Card.Header>
-                        <Card.Body>
-                          <Card.Title>
-                            Door:{' '}
-                            <span
-                              className={
-                                cards.some(
-                                  (card) => card.door.number === door.number
-                                )
-                                  ? 'text-white'
-                                  : 'text-primary'
-                              }
-                            >
-                              {door.number}
-                            </span>
-                          </Card.Title>
-                          <Card.Text>
-                            Manager role:{' '}
-                            <span
-                              className={
-                                cards.some(
-                                  (card) => card.door.number === door.number
-                                )
-                                  ? 'text-white'
-                                  : 'text-primary'
-                              }
-                            >
-                              {door.manager.role}
-                            </span>
-                          </Card.Text>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                  ))}
-                </Row>
-                <p className='text-muted'>
-                  Doors you have access to will be highlighted in{' '}
-                  <span className='text-primary'>color</span>
-                </p>
-                {doors.length <= 0 && (
-                  <div>No doors available in the system 😐</div>
-                )}
-              </Container>
-            </Card.Body>
-          </Card>
-        </Col>
         <Col md={{ span: 12, offset: 0 }} className='mt-5'>
-          <Card bg='white' className='py-2 px-4'>
+          <Card bg='white' className='py-2 px-4' style={{ overflowY: 'auto' }}>
             <Card.Body>
-              <h1 className='mb-2'>Cards</h1>
-              <h3 className='text-primary mb-5'>List of All Your Cards</h3>
-              <Container
-                className='cards-container px-0'
-                style={{ overflowY: 'scroll', maxHeight: '400px' }}
-              >
+              <h1 className='mb-2'>Doors</h1>
+              <h3 className='text-primary mb-5'>List of All Managed Doors</h3>
+              <Container className='cards-container px-0'>
                 <Row xs={1} md={1} lg={1} className='mx-0'>
-                  {cards.map((card, index) => (
+                  {doors.map((door, index) => (
                     <Col key={index} className='mb-4 px-0'>
                       <Card>
-                        <Card.Header>
+                        <Card.Header className='pt-3'>
                           <Card.Title>
-                            Card To Door:{' '}
-                            <span className='text-primary'>
-                              {card.door.number}
-                            </span>
+                            Door Number:{' '}
+                            <span className='text-primary'>{door.number}</span>
+                            <br />
+                            <Badge variant='info' className='ml-2 mt-1'>
+                              {door.cards.length} card(s)
+                            </Badge>
                           </Card.Title>
                         </Card.Header>
-                        <Card.Body>
-                          <Card.Text>
-                            Assigned manager:{' '}
-                            <span className='text-primary'>
-                              {card.door.manager.name}
-                            </span>
-                            <br />
-                            Contact:{' '}
-                            <span className='text-primary'>
-                              {card.door.manager.email}
-                            </span>
-                            <br />
-                            <b>
-                              Status:{' '}
-                              <span className='text-primary'>
-                                {card.status}
-                              </span>
-                              <br />
-                            </b>
-                          </Card.Text>
-                        </Card.Body>
-                        <Card.Footer>
-                          Created At:{' '}
-                          <span className='text-primary'>
-                            {new Date(card.createdAt).toLocaleDateString()}
-                          </span>
-                        </Card.Footer>
+                        <Accordion defaultActiveKey='0'>
+                          {door.cards.map((card, cardIndex) => (
+                            <Card key={cardIndex}>
+                              <Accordion.Item
+                                eventKey={`${index}-${cardIndex}`}
+                              >
+                                <Accordion.Header>
+                                  {/* nbsp creates whitespace that doesnt get cutout*/}
+                                  Card User:&nbsp;
+                                  <span className='text-primary'>
+                                    {card.user.name}
+                                  </span>
+                                </Accordion.Header>
+                                <Accordion.Collapse
+                                  eventKey={`${index}-${cardIndex}`}
+                                >
+                                  <Card.Body className='p-0'>
+                                    <Container
+                                      style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                      }}
+                                      className='px-3'
+                                    >
+                                      <div>
+                                        <div>
+                                          Status:{' '}
+                                          <span
+                                            className={
+                                              card.status === 'not lost'
+                                                ? 'text-primary'
+                                                : 'text-danger'
+                                            }
+                                          >
+                                            {card.status}
+                                          </span>
+                                        </div>
+                                        <div>
+                                          Card ID:{' '}
+                                          <span className='text-primary'>
+                                            {card._id}
+                                          </span>
+                                        </div>
+                                      </div>
+                                      <Button
+                                        onClick={() =>
+                                          handleStatusChange(card)
+                                        }
+                                        className='mt-2'
+                                        variant='outline-primary'
+                                        size='sm'
+                                      >
+                                        Change status
+                                      </Button>
+                                    </Container>
+                                    <Card.Footer className='mt-2'>
+                                      Created At:{' '}
+                                      <span className='text-primary'>
+                                        {new Date(
+                                          card.createdAt
+                                        ).toLocaleDateString()}
+                                      </span>
+                                    </Card.Footer>
+                                  </Card.Body>
+                                </Accordion.Collapse>
+                              </Accordion.Item>
+                            </Card>
+                          ))}
+                        </Accordion>
                       </Card>
                     </Col>
                   ))}
                 </Row>
-                {cards.length <= 0 && <div>You don't own any cards yet 🤐</div>}
+                {doors.length <= 0 && (
+                  <div>
+                    You don't manage any doors yet, ask administrator to assign
+                    them to you 😎
+                  </div>
+                )}
               </Container>
             </Card.Body>
           </Card>
@@ -158,17 +139,15 @@ const EmployeeDashboard = ({ loadAllDoors, loadGuestCards, doors, cards }) => {
 };
 
 EmployeeDashboard.propTypes = {
-  loadAllDoors: PropTypes.func.isRequired,
-  loadGuestCards: PropTypes.func.isRequired,
+  changeCardStatus: PropTypes.func.isRequired,
+  loadAllManagedDoors: PropTypes.func.isRequired,
   doors: PropTypes.arrayOf(PropTypes.object).isRequired,
-  cards: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapStateToProps = (state) => ({
   doors: state.dashboard.doors,
-  cards: state.dashboard.cards,
 });
 
-export default connect(mapStateToProps, { loadAllDoors, loadGuestCards })(
+export default connect(mapStateToProps, { loadAllManagedDoors, changeCardStatus })(
   EmployeeDashboard
 );

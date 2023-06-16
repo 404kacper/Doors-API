@@ -1,4 +1,8 @@
-import { DOORS_LOADED, CARDS_LOADED } from '../actions/types';
+import {
+  DOORS_LOADED,
+  CARDS_LOADED,
+  CARD_STATUS_CHANGED,
+} from '../actions/types';
 
 const initialState = {
   doors: [],
@@ -18,6 +22,20 @@ export default function dashboard(state = initialState, action) {
       return {
         ...state,
         cards: payload.data,
+      };
+    case CARD_STATUS_CHANGED:
+      // Matches card from request with the one in state by comparing ids
+      // Replaces all matching card objects with the updated one from database
+      return {
+        ...state,
+        doors: state.doors.map((door) => {
+          return {
+            ...door,
+            cards: door.cards.map((card) => {
+              return card._id === payload.data._id ? payload.data : card;
+            }),
+          };
+        }),
       };
     default:
       return state;

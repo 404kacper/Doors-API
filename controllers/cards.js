@@ -32,6 +32,9 @@ exports.getCards = asyncHandler(async (req, res, next) => {
 // @route     GET /api/cards/me
 // @access    Private
 exports.getUserCards = asyncHandler(async (req, res, next) => {
+  // POSSIBLE ISSUE WITH THIS IMPLEMENTATION:
+  //  - mongoose operations aren't used here - there are performance implications to the following code
+  
   // Create a new copy of the advancedResults data object
   let userCards = { ...res.advancedResults };
 
@@ -57,17 +60,24 @@ exports.manageStatus = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse('Status can only be lost or not lost', 400));
   }
 
-  const updatedCard = await Card.findByIdAndUpdate(
+  let card = await Card.findByIdAndUpdate(
     req.params.id,
     {
       status: status,
     },
     { new: true }
-  );
+  ).select('-_door -__v').populate({
+    path: 'user',
+    select: 'name -_id',
+  });
+
+  if (!card) {
+    return next(new ErrorResponse('No card found with that ID', 404));
+  }
 
   res.status(200).json({
     success: true,
-    data: updatedCard,
+    data: card,
   });
 });
 

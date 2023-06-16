@@ -6,18 +6,18 @@ const Door = require('../models/Door');
 // @route     POST /api/doors
 // @access    Private/Admin
 exports.createDoor = asyncHandler(async (req, res, next) => {
-  const { number , cards, manager} = req.body;
+  const { number, cards, manager } = req.body;
 
   // Create door from request
   const door = await Door.create({
     number,
     cards,
-    manager
+    manager,
   });
 
   res.status(200).json({
     success: true,
-    data: door
+    data: door,
   });
 });
 
@@ -25,16 +25,34 @@ exports.createDoor = asyncHandler(async (req, res, next) => {
 // @route     GET /api/doors/me
 // @access    Private/Manager
 exports.getManagedDoors = asyncHandler(async (req, res, next) => {
-  const foundDoors = await Door.find({ manager: req.user.id });
+  if (req.user.id) {
+    // Find doors populate them with cards and populate cards with user info
+    const foundDoors = await Door.find({ manager: req.user.id })
+      .select('-__v -manager')
+      .populate({
+        path: 'cards',
+        select: '-door -__v ',
+        populate: {
+          path: 'user',
+          select: '-_id -role -__v -createdAt -email',
+        },
+      });
 
-  if (foundDoors.length === 0) {
-    return next(new ErrorResponse(`User ${req.user.name} doesn't manage any doors.`, 404))
+    if (foundDoors.length === 0) {
+      return next(
+        new ErrorResponse(
+          `User ${req.user.name} doesn't manage any doors.`,
+          404
+        )
+      );
+    }
+
+    // Wrap in data to simulate advancedResults
+    // since they don't really work as expected for all get requests
+    res.status(200).json({ success: true, data: foundDoors });
+  } else {
+    return next(new ErrorResponse(`Please make sure user.id is valid.`));
   }
-
-  // Potential error here look look to use res.advancedResults just like in dashboard
-  res.body = foundDoors;
-
-  res.status(200).json(res.body);
 });
 
 // @desc      Get all doors

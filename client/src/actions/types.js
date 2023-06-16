@@ -14,3 +14,4 @@ export const LOGOUT = 'LOGOUT';
 // Dashboard
 export const DOORS_LOADED = 'DOORS_LOADED';
 export const CARDS_LOADED = 'CARDS_LOADED';
+export const CARD_STATUS_CHANGED = 'CARD_STATUS_CHANGED';

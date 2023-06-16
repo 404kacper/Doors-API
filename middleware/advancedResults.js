@@ -1,3 +1,5 @@
+// NOTE IT'S SPECIFCALLY DESIGNED TO HANDLE GET ALL
+
 const advancedResults = (model, populate) => async (req, res, next) => {
   let query;
 

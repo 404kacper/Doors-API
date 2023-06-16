@@ -28,7 +28,6 @@ router
   .get(
     protect,
     authorize('employee', 'admin'),
-    advancedResults(Door, { path: 'manager', select: 'name role' }),
     getManagedDoors
   );
 
