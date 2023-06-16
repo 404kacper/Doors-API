@@ -13,6 +13,8 @@ const Landing = () => {
               Documented, Simple & Intuitional API for doors management.
               <br />
               Available 3 access role panels.
+              <br />
+              Remember to supply 3 example login credentials before hosting.
             </p>
           </div>
         </div>
