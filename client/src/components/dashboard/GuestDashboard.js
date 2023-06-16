@@ -130,7 +130,13 @@ const GuestDashboard = ({ loadAllDoors, loadGuestCards, doors, cards }) => {
                             <br />
                             <b>
                               Status:{' '}
-                              <span className='text-primary'>
+                              <span
+                                className={
+                                  card.status === 'not lost'
+                                    ? 'text-primary'
+                                    : 'text-danger'
+                                }
+                              >
                                 {card.status}
                               </span>
                               <br />

@@ -5,13 +5,14 @@ import Landing from './components/layout/Landing';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Dashboard from './components/dashboard/Dashboard';
-import { LOGOUT } from './actions/types';
+import Docs from './components/layout/Docs';
 
 // Redux
 import { Provider } from 'react-redux';
 import store from './store';
 import { loadUser } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
+import { LOGOUT } from './actions/types';
 
 // Css and bootstrap js
 import './style.css';
@@ -46,6 +47,7 @@ const App = () => {
           />
           <Route path='register' element={<Register />} />
           <Route path='login' element={<Login />} />
+          <Route path='docs' element={<Docs />} />
         </Routes>
       </Router>
     </Provider>

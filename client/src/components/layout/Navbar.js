@@ -22,10 +22,38 @@ const Navbar = ({
           <i className='fas fa-sign-in-alt'></i> Login
         </Link>
       </li>
+
       <li className='nav-item'>
         <Link className='nav-link' to='/register'>
           <i className='fas fa-user-plus'></i> Register
         </Link>
+      </li>
+
+      <li className='nav-item symbol text-white'>
+        <span className='nav-link px-0'>|</span>
+      </li>
+
+      <li className='nav-item dropdown'>
+        <button
+          className='nav-link dropdown-toggle'
+          id='navbarDropdown'
+          data-bs-toggle='dropdown'
+        >
+          <i className='fas fa-file-alt'></i> Docs
+        </button>
+        <div className='dropdown-menu'>
+          <Link className='dropdown-item' to='/docs'>
+            DocGen
+          </Link>
+          <div className='dropdown-divider'></div>
+          <a
+            className='dropdown-item'
+            href='https://documenter.getpostman.com/view/7914536/2s93shzVEj'
+            target='blank'
+          >
+            Postman
+          </a>
+        </div>
       </li>
     </ul>
   );

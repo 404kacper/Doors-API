@@ -2,6 +2,8 @@ import {
   DOORS_LOADED,
   CARDS_LOADED,
   CARD_STATUS_CHANGED,
+  LOGIN_FAIL,
+  LOGOUT
 } from '../actions/types';
 
 const initialState = {
@@ -36,6 +38,14 @@ export default function dashboard(state = initialState, action) {
             }),
           };
         }),
+      };
+    // Clean states when switching users
+    case LOGIN_FAIL:
+    case LOGOUT:
+      return {
+        ...state,
+        doors: [],
+        cards: [],
       };
     default:
       return state;

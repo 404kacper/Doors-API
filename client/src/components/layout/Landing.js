@@ -10,7 +10,9 @@ const Landing = () => {
           <div className='showcase-inner container'>
             <h1 className='display-4'>Find a Door That Belongs To You</h1>
             <p className='lead'>
-              Simple & Intuitional API for doors management with admin panel.
+              Documented, Simple & Intuitional API for doors management.
+              <br />
+              Available 3 access role panels.
             </p>
           </div>
         </div>
