@@ -10,7 +10,7 @@ const Navbar = ({
   bgClass = '',
   positionClass = '',
 }) => {
-  let role = ''; // default value for role - it can't be destructure directly from props as it can be null
+  let role = ''; // default value for role - it can't be destructured directly from props as it can be null
   if (user) {
     role = user.data.role;
   }
@@ -107,14 +107,20 @@ const Navbar = ({
           <i className='fas fa-user'></i> Account
         </button>
         <div className='dropdown-menu'>
-          <Link className='dropdown-item' to='/manage-bootcamp'>
-            Manage Bootcamp
+          <Link className='dropdown-item' to='/form-create-door'>
+            Create Door
           </Link>
-          <Link className='dropdown-item' to='/manage-reviews'>
-            Manage Reviews
+          <Link className='dropdown-item' to='/form-assign-card'>
+            Assign Card
           </Link>
-          <Link className='dropdown-item' to='/manage-account'>
-            Manage Account
+          <Link className='dropdown-item' to='/form-create-user'>
+            Create User
+          </Link>
+          <Link className='dropdown-item' to='/form-update-user'>
+            Update User
+          </Link>
+          <Link className='dropdown-item' to='/form-delete-user'>
+            Delete User
           </Link>
           <div className='dropdown-divider'></div>
           <button onClick={logout} className='dropdown-item'>

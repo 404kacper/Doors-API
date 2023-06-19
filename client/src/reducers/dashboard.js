@@ -2,13 +2,15 @@ import {
   DOORS_LOADED,
   CARDS_LOADED,
   CARD_STATUS_CHANGED,
+  USERS_LOADED,
   LOGIN_FAIL,
-  LOGOUT
+  LOGOUT,
 } from '../actions/types';
 
 const initialState = {
   doors: [],
   cards: [],
+  users: [],
 };
 
 export default function dashboard(state = initialState, action) {
@@ -24,6 +26,11 @@ export default function dashboard(state = initialState, action) {
       return {
         ...state,
         cards: payload.data,
+      };
+    case USERS_LOADED:
+      return {
+        ...state,
+        users: payload.data,
       };
     case CARD_STATUS_CHANGED:
       // Matches card from request with the one in state by comparing ids
@@ -46,6 +53,7 @@ export default function dashboard(state = initialState, action) {
         ...state,
         doors: [],
         cards: [],
+        users: [],
       };
     default:
       return state;

@@ -21,7 +21,7 @@ router
     authorize('admin'),
     advancedResults(Card, {
       path: 'door user',
-      select: 'number manager name -_id',
+      select: 'number manager name -_id'
     }),
     getCards
   )

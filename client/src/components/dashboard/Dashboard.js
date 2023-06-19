@@ -5,25 +5,25 @@ import { PropTypes } from 'prop-types';
 import Navbar from '../layout/Navbar';
 import GuestDashboard from './GuestDashboard';
 import EmployeeDashboard from './EmployeeDashboard';
-
+import AdminDashboard from './AdminDashboard';
 
 const Dasbhoard = ({ auth: { user } }) => {
   const renderRole = () => {
     if (!user || !user.data) {
-      return <div>User is loading please wait a few seconds...</div>
+      return <div>User is loading please wait a few seconds...</div>;
     }
-    
-    switch(user.data.role) {
+
+    switch (user.data.role) {
       case 'guest':
-        return <GuestDashboard/>
+        return <GuestDashboard />;
       case 'employee':
-        return <EmployeeDashboard/>
+        return <EmployeeDashboard />;
       case 'admin':
-        return <div>Admin logged in.</div>
-        default:
-          return <div>Unkown role logged in.</div>
+        return <AdminDashboard />;
+      default:
+        return <div>Unkown role logged in, please contact customer support for more information.</div>;
     }
-  }
+  };
 
   return (
     <Fragment>
@@ -41,5 +41,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-// export default connect(mapStateToProps, { login })(Login);
 export default connect(mapStateToProps)(Dasbhoard);
