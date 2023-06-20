@@ -53,7 +53,7 @@ const Login = ({ login, isAuthenticated, alerts }) => {
                         required
                       />
                     </div>
-                    <div className='form-group mb-4'>
+                    <div className='form-group mb-3'>
                       <label htmlFor='password'>Password</label>
                       <input
                         type='password'
@@ -74,20 +74,20 @@ const Login = ({ login, isAuthenticated, alerts }) => {
                           msg={alert.msg}
                         />
                       ))}
-                    <div className='form-group'>
+                    <div className='form-group mb-2'>
                       <input
                         type='submit'
                         value='Login'
                         className='btn btn-dark btn-block'
                       />
                     </div>
-                  </form>
-                  <p>
+                    <p>
                     Forgot Password?{' '}
                     <Link to='#' className='text-secondary'>
                       Reset Password
                     </Link>
                   </p>
+                  </form>
                 </div>
               </div>
             </div>

@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 
 import Navbar from '../layout/Navbar';
-import { assignCard } from '../../actions/forms';
+import { createCard } from '../../actions/forms';
 import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
@@ -18,19 +18,20 @@ import {
   FormControl,
   FormLabel,
   FormText,
+  FormCheck,
 } from 'react-bootstrap';
 
-const AssignCardForm = ({ assignCard, alerts }) => {
+const CreateCardForm = ({ createCard, alerts }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [doorNumber, setDoorNumber] = useState('');
-  const [cardId, setCardId] = useState('');
+  const [status, setStatus] = useState('');
+  const [userId, setUserId] = useState('');
 
   const formSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      await assignCard(doorNumber, cardId);
+      await createCard(userId, status);
     } catch (err) {
       console.error(err);
     } finally {
@@ -55,29 +56,40 @@ const AssignCardForm = ({ assignCard, alerts }) => {
                 >
                   <i className='fas fa-chevron-left'></i> Go to Dashboard
                 </Link>
-                <h1 className='mb-2'>Card Assignment Form</h1>
+                <h1 className='mb-2'>Card Creation Form</h1>
                 <Form onSubmit={formSubmit}>
                   <FormGroup className='mt-4'>
-                    <FormLabel>Door:</FormLabel>
+                    <FormLabel>User ID:</FormLabel>
                     <FormControl
                       type='text'
                       name='title'
-                      placeholder='Number'
-                      value={doorNumber}
-                      onChange={(e) => setDoorNumber(e.target.value)}
+                      placeholder='Ask admin for user id in order to create card.'
+                      value={userId}
+                      onChange={(e) => setUserId(e.target.value)}
                     />
                   </FormGroup>
                   <FormGroup className='mt-2'>
-                    <FormLabel>Card ID:</FormLabel>
-                    <FormControl
-                      type='text'
-                      name='duration'
-                      placeholder='ID'
-                      value={cardId}
-                      onChange={(e) => setCardId(e.target.value)}
+                    <FormLabel>Status:</FormLabel>
+                    <FormCheck
+                      type='radio'
+                      name='status'
+                      id='status-lost'
+                      label='Lost'
+                      value='lost'
+                      checked={status === 'lost'}
+                      onChange={(e) => setStatus(e.target.value)}
+                    />
+                    <FormCheck
+                      type='radio'
+                      name='status'
+                      id='status-not-lost'
+                      label='Not Lost'
+                      value='not-lost'
+                      checked={status === 'not-lost'}
+                      onChange={(e) => setStatus(e.target.value)}
                     />
                     <FormText className='text-muted'>
-                      Enter card id that will be assigned to given door number.
+                      Choose status for created card.
                     </FormText>
                   </FormGroup>
                   {alerts !== null &&
@@ -104,8 +116,8 @@ const AssignCardForm = ({ assignCard, alerts }) => {
   );
 };
 
-AssignCardForm.propTypes = {
-  assignCard: PropTypes.func.isRequired,
+CreateCardForm.propTypes = {
+  createCard: PropTypes.func.isRequired,
   alerts: PropTypes.array.isRequired,
 };
 
@@ -113,4 +125,4 @@ const mapStateToProps = (state) => ({
   alerts: state.alert,
 });
 
-export default connect(mapStateToProps, { assignCard })(AssignCardForm);
+export default connect(mapStateToProps, { createCard })(CreateCardForm);

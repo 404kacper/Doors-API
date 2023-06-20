@@ -8,6 +8,8 @@ import Dashboard from './components/dashboard/Dashboard';
 import Docs from './components/layout/Docs';
 import PrivateRoute from './components/routing/PrivateRoute';
 import AssignCardForm from './components/forms/AssignCardForm';
+import CreateDoorForm from './components/forms/CreateDoorForm';
+import CreateCardForm from './components/forms/CreateCardForm';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -52,6 +54,14 @@ const App = () => {
           <Route
             path='form-assign-card'
             element={<PrivateRoute component={AssignCardForm} />}
+          />
+          <Route
+            path='form-create-door'
+            element={<PrivateRoute component={CreateDoorForm} />}
+          />
+          <Route
+            path='form-create-card'
+            element={<PrivateRoute component={CreateCardForm} />}
           />
         </Routes>
       </Router>

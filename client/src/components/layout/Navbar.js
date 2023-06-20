@@ -84,8 +84,8 @@ const Navbar = ({
           <i className='fas fa-user'></i> Account
         </button>
         <div className='dropdown-menu'>
-          <Link className='dropdown-item' to='/create-card'>
-            Create Card - comming soon
+          <Link className='dropdown-item' to='/form-create-card'>
+            Create Card
           </Link>
           <div className='dropdown-divider'></div>
           <button onClick={logout} className='dropdown-item'>

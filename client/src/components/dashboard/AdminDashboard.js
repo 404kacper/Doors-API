@@ -24,7 +24,7 @@ const AdminDashboard = ({
 
   const getAssignedCardIds = (door) => {
     const assignedCards = cards.filter(
-      (card) => card.door.number === door.number
+      (card) => card.door && card.door.number === door.number
     );
 
     if (!assignedCards.length) {
@@ -120,20 +120,33 @@ const AdminDashboard = ({
                         </Card.Header>
                         <Card.Body>
                           <Card.Text>
-                            Access to door:{' '}
-                            <span className='text-primary'>
-                              {card.door.number}
-                            </span>
-                            <br />
+                            {card.door && card.door.number && (
+                              <>
+                                {'Access to door: '}
+                                <span className='text-primary'>
+                                  {card.door.number}
+                                </span>
+                                <br />
+                              </>
+                            )}
                             Assigned to:{' '}
                             <span className='text-primary'>
                               {card.user.name}
                             </span>
                             <br />
-                            Manager ID:{' '}
-                            <span className='text-primary'>
-                              {card.door.manager}
-                            </span>
+                            {card.manager && (
+                              <>
+                                Manager ID:{' '}
+                                <span className='text-primary'>
+                                  {card.manager._id}
+                                </span>
+                                <br />
+                                Manager Name:{' '}
+                                <span className='text-primary'>
+                                  {card.manager.name}
+                                </span>
+                              </>
+                            )}
                           </Card.Text>
                         </Card.Body>
                         <Card.Footer>
