@@ -16,6 +16,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     password2: '',
     role: 'guest', // for checked property in radio buttons - default role
   });
+  
   const roleOptions = [
     { value: 'guest', label: 'Guest' },
     { value: 'employee', label: 'Employee' },

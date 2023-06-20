@@ -7,6 +7,7 @@ import Register from './components/auth/Register';
 import Dashboard from './components/dashboard/Dashboard';
 import Docs from './components/layout/Docs';
 import PrivateRoute from './components/routing/PrivateRoute';
+import AssignCardForm from './components/forms/AssignCardForm';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -48,6 +49,10 @@ const App = () => {
           <Route path='register' element={<Register />} />
           <Route path='login' element={<Login />} />
           <Route path='docs' element={<Docs />} />
+          <Route
+            path='form-assign-card'
+            element={<PrivateRoute component={AssignCardForm} />}
+          />
         </Routes>
       </Router>
     </Provider>
