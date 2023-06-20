@@ -19,7 +19,6 @@ export const loadUser = () => async (dispatch) => {
       type: USER_LOADED,
       payload: res.data,
     });
-
   } catch (error) {
     dispatch({
       type: AUTH_ERROR,
@@ -54,7 +53,15 @@ export const register =
 
       if (errorResponseMessage) {
         dispatch(setAlert(errorResponseMessage, 'danger'));
+      } else {
+        dispatch(
+          setAlert(
+            'Undefined error encountered, check console for more information.',
+            'danger'
+          )
+        );
       }
+
       dispatch({ type: REGISTER_FAIL });
     }
   };
@@ -85,6 +92,13 @@ export const login = (email, password) => async (dispatch) => {
 
     if (errorResponseMessage) {
       dispatch(setAlert(errorResponseMessage, 'danger'));
+    } else {
+      dispatch(
+        setAlert(
+          'Undefined error encountered, check console for more information.',
+          'danger'
+        )
+      );
     }
 
     dispatch({ type: LOGIN_FAIL });

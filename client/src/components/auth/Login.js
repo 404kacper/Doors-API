@@ -4,8 +4,9 @@ import { Link, Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { login } from '../../actions/auth';
+import Alert from '../layout/Alert';
 
-const Login = ({ login, isAuthenticated }) => {
+const Login = ({ login, isAuthenticated, alerts }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -64,6 +65,15 @@ const Login = ({ login, isAuthenticated }) => {
                         required
                       />
                     </div>
+                    {alerts !== null &&
+                      alerts.length > 0 &&
+                      alerts.map((alert) => (
+                        <Alert
+                          key={alert.id}
+                          alertType={alert.alertType}
+                          msg={alert.msg}
+                        />
+                      ))}
                     <div className='form-group'>
                       <input
                         type='submit'
@@ -91,10 +101,12 @@ const Login = ({ login, isAuthenticated }) => {
 Login.propTypes = {
   login: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
+  alerts: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
+  alerts: state.alert,
 });
 
 export default connect(mapStateToProps, { login })(Login);
