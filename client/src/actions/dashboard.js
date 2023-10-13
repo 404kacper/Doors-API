@@ -1,4 +1,4 @@
-import axios from 'axios';
+import api from '../utils/axiosProductionInterface';
 import {
   DOORS_LOADED,
   CARDS_LOADED,
@@ -11,7 +11,7 @@ import {
 // Load Doors
 export const loadAllDoors = () => async (dispatch) => {
   try {
-    const res = await axios.get('/api/doors');
+    const res = await api.get('/api/doors');
 
     dispatch({
       type: DOORS_LOADED,
@@ -25,7 +25,7 @@ export const loadAllDoors = () => async (dispatch) => {
 // Load Cards
 export const loadGuestCards = () => async (dispatch) => {
   try {
-    const res = await axios.get('/api/cards/me');
+    const res = await api.get('/api/cards/me');
 
     dispatch({
       type: CARDS_LOADED,
@@ -41,7 +41,7 @@ export const loadGuestCards = () => async (dispatch) => {
 // Load Doors
 export const loadAllManagedDoors = () => async (dispatch) => {
   try {
-    const res = await axios.get('/api/doors/me');
+    const res = await api.get('/api/doors/me');
 
     dispatch({
       type: DOORS_LOADED,
@@ -56,7 +56,7 @@ export const loadAllManagedDoors = () => async (dispatch) => {
 export const changeCardStatus = (card) => async (dispatch) => {
   let reverseStatus = card.status === 'lost' ? 'not lost' : 'lost';
   try {
-    const res = await axios.put(`/api/cards/${card._id}`, {
+    const res = await api.put(`/api/cards/${card._id}`, {
       status: reverseStatus,
     });
 
@@ -74,7 +74,7 @@ export const changeCardStatus = (card) => async (dispatch) => {
 // Load Users
 export const loadAllUsers = () => async (dispatch) => {
   try {
-    const res = await axios.get(`/api/users`);
+    const res = await api.get(`/api/users`);
 
     dispatch({
       type: USERS_LOADED,
@@ -88,7 +88,7 @@ export const loadAllUsers = () => async (dispatch) => {
 // Load Cards
 export const loadAllCards = () => async (dispatch) => {
   try {
-    const res = await axios.get(`/api/cards`);
+    const res = await api.get(`/api/cards`);
 
     dispatch({
       type: CARDS_LOADED,
