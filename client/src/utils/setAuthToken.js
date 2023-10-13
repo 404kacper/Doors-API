@@ -1,4 +1,4 @@
-import api from '../utils/axiosProductionInterface';
+import api from './axiosProductionInterface';
 
 const setAuthToken = token => {
     if(token) {

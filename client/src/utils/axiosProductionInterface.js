@@ -4,7 +4,7 @@ import axios from 'axios';
 const api = axios.create({
   baseURL:
     process.env.NODE_ENV === 'production'
-      ? process.env.DOORS_BACKEND_URL
+      ? process.env.REACT_APP_BACKEND_URL
       : null,
 });
 
