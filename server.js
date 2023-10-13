@@ -2,6 +2,7 @@ require('colors');
 const express = require('express');
 const connectDB = require('./config/db');
 const dotenv = require('dotenv');
+const cors = require('cors');
 const errorHandler = require('./middleware/error');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
@@ -14,6 +15,10 @@ connectDB();
 
 // Initialize server
 const app = express();
+
+// Allow cors from anywhere
+// Open & documented API was the whole reason for that
+app.use(cors())
 
 // Body parser
 app.use(express.json());
