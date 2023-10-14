@@ -1,4 +1,4 @@
-import axios from 'axios';
+import api from '../utils/axiosProductionInterface';
 import {} from './types';
 import { setAlert } from './alert';
 
@@ -7,7 +7,7 @@ import { setAlert } from './alert';
 // Assign card to a door
 export const assignCard = (doorNumber, cardId) => async (dispatch) => {
   try {
-    await axios.put('/api/cards', {
+    await api.put('/api/cards', {
       number: doorNumber,
       card: cardId,
     });
@@ -28,7 +28,7 @@ export const assignCard = (doorNumber, cardId) => async (dispatch) => {
 
 export const createDoor = (doorNumber, managerId) => async (dispatch) => {
   try {
-    await axios.post('/api/doors', {
+    await api.post('/api/doors', {
       number: doorNumber,
       manager: managerId,
     });
@@ -50,7 +50,7 @@ export const createDoor = (doorNumber, managerId) => async (dispatch) => {
 // Employee actions
 export const createCard = (userId, status) => async (dispatch) => {
   try {
-    await axios.post('/api/cards', {
+    await api.post('/api/cards', {
       user: userId,
       status: status,
     });
